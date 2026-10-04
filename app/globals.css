@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Noto Serif Devanagari", "Nirmala UI", "Mangal", Georgia, serif;
+  --font-body: "Noto Sans Devanagari", "Nirmala UI", "Mangal", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-divine-deep font-body text-divine-cream antialiased;
+  overflow-x: clip; /* hidden की जगह clip: phone पर scroll नहीं रुकता */
+}
+
+::selection {
+  background: #ff7b1c;
+  color: #05030f;
+}
+
+/* सोनेरी चमकता हुआ टेक्स्ट */
+.text-gold-shimmer {
+  background: linear-gradient(90deg, #ffd166 0%, #fff3e0 25%, #ff7b1c 50%, #ffd166 75%, #ffd166 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+/* masonry (फ़ोटो की दीवार) */
+.masonry {
+  column-count: 2;
+  column-gap: 0.9rem;
+}
+@media (min-width: 768px) {
+  .masonry {
+    column-count: 3;
+  }
+}
+@media (min-width: 1280px) {
+  .masonry {
+    column-count: 4;
+  }
+}
+.masonry > * {
+  break-inside: avoid;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0720;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#ff7b1c, #5a1470);
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-flicker {
+  animation: flicker 2.6s ease-in-out infinite;
+}
+.animate-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+
+/* ============ UI upgrade ============ */
+/* पूरे पेज के पीछे गहरा ब्रह्मांडीय रंग-मिश्रण (fixed pseudo = phone पर भी smooth) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 520px at 50% -8%, rgba(194,24,91, 0.38), transparent 62%),
+    radial-gradient(700px 480px at 100% 45%, rgba(255, 123, 28, 0.13), transparent 62%),
+    radial-gradient(700px 480px at 0% 85%, rgba(90,20,112, 0.3), transparent 62%),
+    radial-gradient(1.5px 1.5px at 20px 30px, rgba(255, 233, 163, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 90px 120px, rgba(255, 233, 163, 0.4), transparent 60%);
+  background-size: auto, auto, auto, 160px 160px, 220px 220px;
+}
+
+/* शीशे जैसे सुनहरे कार्ड */
+.glass {
+  position: relative;
+  border: 1px solid rgba(255, 209, 102, 0.22);
+  border-radius: 1.5rem;
+  background: linear-gradient(160deg, rgba(32,12,66, 0.78), rgba(6,4,22, 0.78));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 233, 163, 0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+@media (hover: hover) {
+  .glass:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 209, 102, 0.5);
+    box-shadow: 0 16px 44px -14px rgba(255, 123, 28, 0.5), inset 0 1px 0 rgba(255, 233, 163, 0.12);
+  }
+}
+
+/* घूमता हुआ मंडल (idol के पीछे) */
+.mandala {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(135vw, 820px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 209, 102, 0.17) 0 3deg, transparent 3deg 10deg);
+  -webkit-mask-image: radial-gradient(circle, transparent 22%, #000 23%, #000 58%, transparent 70%);
+  mask-image: radial-gradient(circle, transparent 22%, #000 23%, #000 58%, transparent 70%);
+  animation: spin 100s linear infinite;
+}
+.mandala.rev {
+  width: min(95vw, 580px);
+  background: repeating-conic-gradient(from 5deg, rgba(255, 123, 28, 0.2) 0 5deg, transparent 5deg 15deg);
+  animation-direction: reverse;
+  animation-duration: 70s;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* सुनहरी पट्टी (marquee) */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  border-block: 1px solid rgba(255, 209, 102, 0.22);
+  background: linear-gradient(90deg, rgba(90,20,112, 0.6), rgba(194,24,91, 0.4), rgba(90,20,112, 0.6));
+}
+.marquee > div {
+  display: inline-block;
+  padding: 0.75rem 0;
+  animation: marq 30s linear infinite;
+}
+@keyframes marq {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* गिरती पंखुड़ियाँ */
+.petal {
+  position: fixed;
+  top: -24px;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 70% 30% 70% 30%;
+  background: linear-gradient(135deg, #ffd166, #ff7b1c);
+  opacity: 0;
+  animation: petalfall linear infinite;
+}
+@keyframes petalfall {
+  0% { transform: translate3d(0, 0, 0) rotate(0); opacity: 0; }
+  10% { opacity: 0.75; }
+  90% { opacity: 0.6; }
+  100% { transform: translate3d(var(--sway), 108vh, 0) rotate(520deg); opacity: 0; }
+}
+
+/* शीर्षक के नीचे सजावटी रेखा */
+.orn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: #ffd166;
+  margin: 0.35rem auto 1.6rem;
+}
+.orn::before,
+.orn::after {
+  content: "";
+  height: 1px;
+  width: min(22vw, 110px);
+  background: linear-gradient(90deg, transparent, rgba(255, 209, 102, 0.75));
+}
+.orn::after {
+  transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mandala, .marquee > div, .petal { animation: none; }
+}
+
+/* ===== v4: दिव्य किरणें + सूर्य-मंडल ===== */
+.rays {
+  position: absolute; left: 50%; top: 36%; width: 170vmax; height: 170vmax; translate: -50% -50%;
+  pointer-events: none; opacity: 0.55;
+  background: repeating-conic-gradient(from 0deg, rgba(255,200,90,.16) 0 2.2deg, transparent 2.2deg 9deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0, transparent 38%); mask-image: radial-gradient(circle, #000 0, transparent 38%);
+  animation: spin 160s linear infinite;
+}
+.sundisc {
+  position: absolute; left: 50%; top: 36%; width: min(120vw, 700px); aspect-ratio: 1; translate: -50% -50%;
+  border-radius: 9999px; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,214,102,.5) 0%, rgba(255,123,28,.28) 32%, rgba(194,24,91,.12) 55%, transparent 70%);
+  animation: breathe 5s ease-in-out infinite;
+}
+@keyframes breathe { 0%,100% { transform: scale(1); opacity: .85 } 50% { transform: scale(1.08); opacity: 1 } }
+h1.font-display, h2.font-display { text-shadow: 0 0 36px rgba(255,150,40,.35); }
+@media (prefers-reduced-motion: reduce) { .rays, .sundisc { animation: none; } }
+
+/* ===== v5: नया दिव्य थीम (मध्यरात्रि-बैंगनी + कमल-गुलाबी + सोना) + कर्सर ===== */
+body.custom-cursor, body.custom-cursor * { cursor: none !important; }
+body.custom-cursor input, body.custom-cursor textarea { cursor: text !important; }
+@keyframes fadein { from { opacity: 0; transform: scale(.92) } to { opacity: 1; transform: none } }
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(60% 40% at 15% 20%, rgba(120,60,200,.16), transparent 70%), radial-gradient(50% 40% at 90% 70%, rgba(255,79,147,.1), transparent 70%);
+}
